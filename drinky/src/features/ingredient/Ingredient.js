@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchIngredients, selectAllIngredient } from "./ingredientSlice";
 import styles from "./Ingredient.module.css";
 import { Container, Jumbotron, ListGroup, ListGroupItem } from "reactstrap";
+import { Link } from "react-router-dom";
 
 export function Ingredient() {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export function Ingredient() {
   let ingredients = useSelector((state) => selectAllIngredient(state));
   ingredients = ingredients.filter((i) => {
     
-    const regex = RegExp('gin$|rum|vodka|whiskey|tequila|brandy', 'i');
+    const regex = RegExp('^gin$|^rum$|^vodka$|^whiskey$|^tequila$|^brandy$', 'i');
       return regex.test(i.strIngredient1);
     }
     );
@@ -38,7 +39,11 @@ export function Ingredient() {
       <Container>
         <ListGroup>
           {ingredients.map((c) => (
-            <ListGroupItem key={c.id}>{c.strIngredient1}</ListGroupItem>
+              <ListGroupItem key={c.id}>
+                  <Link to={`drinks/${c.id}`}>
+                    {c.strIngredient1}
+                  </Link>
+              </ListGroupItem>
           ))}
         </ListGroup>
       </Container>
